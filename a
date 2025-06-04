@@ -124,6 +124,7 @@ function library.new(library, name,theme)
 -------------------------AL------------------------------
 ALTransparency = 0.6
 ALcolor = Color3.fromRGB(0,0,0)
+
 -------------------------AL------------------------------
 if theme == 'dark' then
     MainColor = Color3.fromRGB(25, 25, 25)
@@ -628,31 +629,42 @@ UIG.Parent = Open
           function section.Button(section, text, callback)
             local callback = callback or function() end
     
-            local BtnModule = Instance.new("Frame")
-            local Btn = Instance.new("TextButton")
-            local BtnC = Instance.new("UICorner")    
-            
-            BtnModule.Name = "BtnModule"
-            BtnModule.Parent = Objs
-            BtnModule.BackgroundColor3 = Color3.fromRGB(139, 0, 255)
-            BtnModule.BackgroundTransparency = 1.000
-            BtnModule.BorderSizePixel = 0
-            BtnModule.Position = UDim2.new(0, 0, 0, 0)
-            BtnModule.Size = UDim2.new(0, 428, 0, 38)
-            BtnModule.Transparency = 0.75
-            
-            Btn.Name = "Btn"
-            Btn.Parent = BtnModule
-            Btn.BackgroundColor3 = zyColor
-            Btn.BorderSizePixel = 0
-            Btn.Size = UDim2.new(0, 428, 0, 38)
-            Btn.AutoButtonColor = false
-            Btn.Font = Enum.Font.GothamSemibold
-            Btn.Text = "   " .. text
-            Btn.TextColor3 = ALcolor
-            Btn.TextSize = 16.000
-            Btn.TextXAlignment = Enum.TextXAlignment.Left
-            Btn.BackgroundTransparency = ALTransparency
+local BtnModule = Instance.new("Frame")
+local Btn = Instance.new("TextButton")
+local BtnC = Instance.new("UICorner")    
+
+BtnModule.Name = "BtnModule"
+BtnModule.Parent = Objs
+BtnModule.BackgroundColor3 = Color3.fromRGB(139, 0, 255)
+BtnModule.BackgroundTransparency = 1.000
+BtnModule.BorderSizePixel = 0
+BtnModule.Position = UDim2.new(0, 0, 0, 0)
+BtnModule.Size = UDim2.new(0, 428, 0, 38)
+BtnModule.Transparency = 0.75
+
+Btn.Name = "Btn"
+Btn.Parent = BtnModule
+Btn.BackgroundColor3 = zyColor -- 修改为灰色
+Btn.BorderSizePixel = 0
+Btn.Size = UDim2.new(0, 428, 0, 38)
+Btn.AutoButtonColor = false
+Btn.Font = Enum.Font.GothamSemibold
+Btn.Text = "   " .. text
+Btn.TextColor3 = ALcolor
+Btn.TextSize = 16.000
+Btn.TextXAlignment = Enum.TextXAlignment.Left
+Btn.BackgroundTransparency = ALTransparency
+
+BtnC.CornerRadius = UDim.new(0, 6)
+BtnC.Name = "BtnC"
+BtnC.Parent = Btn
+
+Btn.MouseButton1Click:Connect(function()
+    spawn(function()
+        Ripple(Btn)
+    end)
+    spawn(callback)
+end)
             
             BtnC.CornerRadius = UDim.new(0, 6)
             BtnC.Name = "BtnC"
